@@ -147,28 +147,28 @@ def create_user_profile(sender, instance, created, **kwargs):
             )
 
 
-# @receiver(post_save, sender=Todo)
-# def create_user_profile(sender, instance, created, **kwargs):
-#     if created:
-#         assignor = instance.todo.assignor.email.split("@")[1]
-#         todo = instance
-#
-#         if todo:
-#             body_message = f"""
-#                    Завдання було виконано співробітником,
-#                    основна інформація про завдання:
-#                    пройдено часу: {instance.todo.time};
-#                    рiзниця мiж пройденим часом та назначеним часом: {instance.todo.time - instance.todo.stock_time};
-#
-#                    звіт оператора: {instance.todo.report}
-#                    """
-#
-#             send_mail(
-#                 subject="New registration request",
-#                 body=body_message,
-#                 to=assignor,
-#             )
-#
+@receiver(post_save, sender=Todo)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        assignor = instance.todo.assignor.email.split("@")[1]
+        todo = instance
+
+        if todo:
+            body_message = f"""
+                   Завдання було виконано співробітником,
+                   основна інформація про завдання:
+                   пройдено часу: {instance.todo.time};
+                   рiзниця мiж пройденим часом та назначеним часом: {instance.todo.time - instance.todo.stock_time};
+
+                   звіт оператора: {instance.todo.report}
+                   """
+
+            send_mail(
+                subject="New registration request",
+                body=body_message,
+                to=assignor,
+            )
+
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):

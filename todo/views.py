@@ -3,7 +3,7 @@ import datetime
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.db.models import Q
-from django.views.generic import DetailView, View
+from django.views.generic import DetailView, View, DeleteView
 
 from todo.forms import RegistrationForm, TodoForm
 from todo.models import Todo, Profile
@@ -98,3 +98,7 @@ class TaskTodoDoneDetailView(LoginRequiredMixin, DetailView):
 class ProfileView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         return render(request, "profile/profile.html")
+
+
+class TaskTODODeleteView(LoginRequiredMixin, DeleteView):
+    model = Todo
