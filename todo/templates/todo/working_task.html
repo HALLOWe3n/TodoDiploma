@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>{{ todo.title }}</title>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Завдання</h1>
+        <br>
+        <div class="card" style="background-color: #2E2F30; color: white">
+            <div class="card-body">
+                <h5 class="card-title">{{ todo.title }}</h5>
+                <hr>
+                <p class="card-text"><b>Опис завдання:</b>{{ todo.task }}</p>
+                <div class="row">
+                    <div class="col-md-4">
+                        <p class="card-text">Прiорiтет: <b>{{ todo.get_priority_display }}</b></p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="card-text">Задачу створив: <b>{{ todo.assignor }}</b></p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="card-text">Завдання дiйсне до: <b>{{ todo.deadline }}</b></p>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>Час на завдання: <b>{{ todo.time }}h</b></p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <p>Пройдено часу: <b>00.00.30</b></p>
+                    </div>
+
+                </div>
+                <br>
+                <hr>
+                <h4>Основнi показники:</h4>
+                <p>Температура котельной: <b>{{ todo.temperature }}°</b></p>
+                <p>Лічильник тепла: <b>{{ todo.heat_meter }}</b></p>
+
+                <p>Витік води: <b>
+                    {% if todo.water_leak %}
+                        присутнiй
+                    {% else %}
+                        вiдсутнiй
+                    {% endif %}
+                </b></p>
+                <p class="card-text">Затоплення: <b>
+                    {% if todo.flooding %}
+                        присутне
+                    {% else %}
+                        вiдсутне
+                    {% endif %}
+                </b></p>
+                <hr>
+                <div class="row">
+                    <div class="col-md-3">
+                        <p class="card-text"><small class="text-muted">Створено: {{ todo.created }}</small></p>
+                    </div>
+                    {% if user.is_superuser %}
+                        <div class="col-md-3">
+                            <button class="btn btn-warning">Редагувати завдання</button>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-danger">Видалити завдання</button>
+                        </div>
+                    {% endif %}
+
+                    <div class="col-md-3">
+                        <button class="btn btn-warning">Завершити роботу</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

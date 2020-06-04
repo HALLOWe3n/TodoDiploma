@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="container">
+        <div class="col-md-6" align="left">
+            <h1>Ласкаво просимо</h1>
+            <p>
+                Додайте свої дані для входу нижче:
+            </p><br>
+            <form method="post">
+                {% csrf_token %}
+                {% include 'includes/form_layout.html' with form=form %}
+                <button type="submit" class="btn btn-primary">Увiйти</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

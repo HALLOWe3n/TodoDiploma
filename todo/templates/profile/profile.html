@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="container">
+        <h1>Профiль</h1>
+    {% if user.is_superuser %}
+        <h3>{{ user.email }}</h3>
+        <h4>{{ user.profile.position }}</h4>
+        
+        <p>{{ user.username }}</p>
+    {% endif %}
+        <a href="" class="btn btn-success">Редагувати</a>
+    </div>
+{% endblock %}

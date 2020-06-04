@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Дошка</title>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            Переглянути повiдомлення <i class="far fa-bell"></i>
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+        <div class="row">
+            <div class="col-md-9">
+                <h1>Дошка</h1>
+            </div>
+            <div class="col-md-3 form-inline">
+                {% if user.is_superuser %}
+                    <p style="color: red">Ви увiйшли як адмiнiстратор</p>
+                    <a href="{% url 'todo:add_task' %}">
+                        <button type="button" class="btn btn-success">Створити завдання</button>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+        <hr style="background-color: white">
+        <br>
+        <div class="row">
+            <div class="col-md-4">
+                <h3>Очікує на розгляд</h3>
+                {% for todo in todos %}
+                    {% if todo.PENDING %}
+                        <div class="card" style="width: 20rem; color: white; background-color: #afafaf;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ todo.title }}</h5>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="card-text" title="Прiорiтет">{{ todo.get_priority_display }}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="card-text">{{ todo.assignee.username }}</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="col-md-12">
+                                        <p><b>Створена:</b> {{ todo.created }}</p>
+                                        <p><b>Дiйна до:</b> {{ todo.deadline }}</p>
+                                    </div>
+                                </div>
+
+                                <br>
+                                <a href="{% url "todo:task_detail" todo.pk %}" class="btn btn-primary">Переглянути
+                                    завдання</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <br>
+                {% endfor %}
+            </div>
+
+            <div class="col-md-4">
+                <h3>В Роботi</h3>
+                {% for todo in todos %}
+                    {% if todo.PENDING %}
+                        <div class="card" style="width: 20rem; color: white; background-color: #afafaf;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ todo.title }}</h5>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="card-text" title="Прiорiтет">{{ todo.get_priority_display }}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="card-text">{{ todo.assignee.username }}</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="col-md-12">
+                                        <p><b>Створена:</b> {{ todo.created }}</p>
+                                        <p><b>Дiйна до:</b> {{ todo.deadline }}</p>
+                                    </div>
+                                </div>
+
+                                <br>
+                                <a href="{% url "todo:task_detail" todo.pk %}" class="btn btn-primary">Переглянути
+                                    завдання</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <br>
+                {% endfor %}
+            </div>
+            <div class="col-md-4">
+                <h3>Завершенi</h3>
+                {% for todo in todos %}
+                    {% if todo.PENDING %}
+                        <div class="card" style="width: 20rem; color: white; background-color: #afafaf;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ todo.title }}</h5>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="card-text" title="Прiорiтет">{{ todo.get_priority_display }}</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p class="card-text">{{ todo.assignee.username }}</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="col-md-12">
+                                        <p><b>Створена:</b> {{ todo.created }}</p>
+                                        <p><b>Дiйна до:</b> {{ todo.deadline }}</p>
+                                    </div>
+                                </div>
+
+                                <br>
+                                <a href="{% url "todo:task_detail" todo.pk %}" class="btn btn-primary">Переглянути
+                                    завдання</a>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <br>
+                {% endfor %}
+            </div>
+        </div>
+
+
+        {#        {% if user.profile.is_approved %}#}
+        {#            {% if todos %}#}
+        {#                <table class="table table-striped">#}
+        {#                    <thead>#}
+        {#                    <tr>#}
+        {#                        <th>№</th>#}
+        {#                        <th class="col-md-4">Задачi</th>#}
+        {#                        <th>Створена</th>#}
+        {#                        <th>Дедлайн</th>#}
+        {#                        <th>Статус</th>#}
+        {#                    </tr>#}
+        {#                    </thead>#}
+        {#                    <tbody>#}
+        {#                    {% for todo in todos %}#}
+        {#                        <tr>#}
+        {#                            <td>{{ forloop.counter }}</td>#}
+        {#                            <td class="col-md-4">{{ todo.title }}</td>#}
+        {#                            <td>{{ todo.created }}</td>#}
+        {#                            <td>{{ todo.deadline }}</td>#}
+        {#                            <td>{{ todo.get_status_display }}</td>#}
+        {#                            <td>#}
+        {#                                {% if user.is_superuser %}#}
+        {#                                    <a href="{% url 'todo:update_task' pk=todo.pk %}">#}
+        {#                                        <i class="glyphicon glyphicon-pencil"></i>#}
+        {#                                    </a>#}
+        {#                                {% endif %}#}
+        {#                            </td>#}
+        {#                            <td>#}
+        {#                                <a href="" class="btn btn-warning">Переглянути</a>#}
+        {#                            </td>#}
+        {#                        </tr>#}
+        {#                    {% endfor %}#}
+        {#                    </tbody>#}
+        {#                </table>#}
+        {#            {% else %}#}
+        {#                <h4>Задачi не знайденi</h4>#}
+        {#            {% endif %}#}
+        {##}
+        {#            {% if user.is_superuser %}#}
+        {#                <a href="{% url 'todo:add_task' %}">#}
+        {#                    <button type="button" class="btn btn-success">Створити Task</button>#}
+        {#                </a>#}
+        {#            {% endif %}#}
+        {#            <div class="dropdown pull-right">#}
+        {#                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">#}
+        {#                    Статуси задач#}
+        {#                    <span class="caret"></span></button>#}
+        {#                <ul class="dropdown-menu">#}
+        {#                    <li><a href="{% url 'todo:home' %}">All</a></li>#}
+        {#                    <li><a href="{% url 'todo:filter' status='D' %}">Завершенi</a></li>#}
+        {#                    <li><a href="{% url 'todo:filter' status='A' %}">Активнi</a></li>#}
+        {#                    <li><a href="{% url 'todo:filter' status='P' %}">Очікує на розгляд</a></li>#}
+        {#                    <li><a href="{% url 'todo:filter' status='C' %}">Скасовано</a></li>#}
+        {#                </ul>#}
+        {#            </div>#}
+        {#        {% else %}#}
+        {#            <h4>#}
+        {#                Ви успішно зареєстровані. Незабаром ваш рахунок буде активовано.#}
+        {#            </h4>#}
+        {#        {% endif %}#}
+    </div>
+
+{% endblock %}

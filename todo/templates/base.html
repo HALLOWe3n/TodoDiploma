@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+
+    <i class="fas fa-camera"></i> <!-- this icon's 1) style prefix == fas and 2) icon name == camera -->
+    <i class="fas fa-camera"></i> <!-- using an <i> element to reference the icon -->
+    <span class="fas fa-camera"></span> <!-- using a <span> element to reference the icon -->
+    {#    <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+    {% block head %}
+        <title>base</title>
+    {% endblock %}
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">{{ user.username }}</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="form-inline navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Дошка <span class="sr-only">(current)</span></a>
+            </li>
+
+            {% if user.profile.is_admin %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'todo:pending_requests' %}">Запити на розгляд<span
+                            class="sr-only">(current)</span></a>
+                </li>
+            {% endif %}
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'todo:logout' %}" class="btn btn-outline-success my-2 mr-sm-2">Вийти з
+                    системи</a></li>
+            {% else %}
+                <li><a href="{% url 'todo:login' %}" class="btn btn-warning my-2 my-sm-0">Login</a></li>
+                <li><a href="{% url 'todo:register' %}" class="btn btn-outline-success my-2 my-sm-0">Register</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+    </form>
+</nav>
+
+{#<div class="container">#}
+{#    <br>#}
+{##}
+{##}
+{#    <nav class="navbar navbar-default">#}
+{#        <div class="container-fluid">#}
+{#            <div class="navbar-header">#}
+{##}
+{#                <span class="sr-only">Toggle navigation</span>#}
+{#                <span class="icon-bar"></span>#}
+{#                <span class="icon-bar"></span>#}
+{#                <span class="icon-bar"></span>#}
+{#                </button>#}
+{#            </div>#}
+{#            <a class="navbar-brand" href="/"></a>#}
+{#            <div id="navbar" class="navbar-collapse collapse">#}
+{#                {% if user.is_authenticated %}#}
+{#                    <ul class="nav navbar-nav">#}
+{#                        <li><a href="{% url 'todo:home' %}">Домашня сторiнка</a></li>#}
+{#                    </ul>#}
+{#                    <ul class="nav navbar-nav navbar-right">#}
+{##}
+{#                        <li><a href="{% url 'todo:logout' %}">Logout</a></li>#}
+{#                    </ul>#}
+{#                {% else %}#}
+{#                    <ul class="nav navbar-nav">#}
+{#                    </ul>#}
+{##}
+{#                {% endif %}#}
+{#            </div>#}
+{#        </div>#}
+{#    </nav>#}
+{#</div>#}
+
+{% block body %}
+    <h1>Base</h1>
+{% endblock %}
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</html>
